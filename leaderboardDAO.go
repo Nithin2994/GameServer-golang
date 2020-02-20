@@ -161,12 +161,12 @@ func getPlayerRank(playerID string) int {
 
 	leaderboardID, err := redis.String(conn.Do("GET", playerID))
 	if err != nil {
-		log.Fatal(err)
+		return -1
 	}
 	if leaderboardID != "" {
 		rank, err := redis.Int(conn.Do("ZREVRANK", leaderboardID, playerID))
 		if err != nil {
-			log.Fatal(err)
+			return -1
 		}
 		playerRank = rank
 	}
@@ -198,12 +198,12 @@ func getTopNPlayers(playerID string) []string {
 
 	leaderboardID, err := redis.String(conn.Do("GET", playerID))
 	if err != nil {
-		log.Fatal(err)
+		return nil
 	}
 	if leaderboardID != "" {
 		details, err := redis.Strings(conn.Do("ZREVRANGEBYSCORE", leaderboardID, "inf", "-inf", "LIMIT", 0, 10))
 		if err != nil {
-			log.Fatal(err)
+			return nil
 		}
 		return details
 	}
@@ -217,7 +217,7 @@ func getAboveAndBelow(playerID string) []string {
 	leaderboardID, err := redis.String(conn.Do("GET", playerID))
 	playerRank := getPlayerRank(playerID)
 	if err != nil {
-		log.Fatal(err)
+		return nil
 	}
 	if leaderboardID != "" {
 		var beginIndex int
@@ -234,7 +234,7 @@ func getAboveAndBelow(playerID string) []string {
 		below, err := redis.Strings(conn.Do("ZREVRANGEBYSCORE", leaderboardID, "inf", "-inf", "LIMIT", playerRank, endIndex))
 		fmt.Println(below)
 		if err != nil {
-			log.Fatal(err)
+			return nil
 		}
 		return append(above, below...)
 	}

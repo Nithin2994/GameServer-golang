@@ -15,6 +15,7 @@ var waiting string = "Waiting"
 var invalidToken string = "Invalid Token"
 
 func main() {
+
 	router := mux.NewRouter()
 	router.HandleFunc("/index", index)
 	router.HandleFunc("/login", login).Methods("POST")
@@ -27,6 +28,10 @@ func main() {
 	router.HandleFunc("/leaderboard/{leaderboardId}/{playerId}", playerDetails).Methods("GET")
 	router.HandleFunc("/matchmaking/findOpponent", findOpponenet).Methods("POST")
 	router.HandleFunc("/matchmaking/pollOpponent", pollOpponent).Methods("POST")
+	router.HandleFunc("/wallet/updateWalletBalances", updatePlayerWallet).Methods("POST")
+	router.HandleFunc("/wallet/balances", getPlayerWallet).Methods("POST")
+	router.HandleFunc("/wallet/debit", debit).Methods("POST")
+	router.HandleFunc("/wallet/credit", credit).Methods("POST")
 	log.Fatal(http.ListenAndServe(":8081", router))
 
 }
@@ -61,6 +66,15 @@ func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "<ul>")
 	fmt.Fprintln(w, "<li>/matchmaking/findOpponent</li>")
 	fmt.Fprintln(w, "<li>/matchmaking/pollOpponent</li>")
+	fmt.Fprintln(w, "</ul>")
+	fmt.Fprintln(w, "")
+	fmt.Fprintln(w, "")
+	fmt.Fprintln(w, "<h3>Wallet Apis</h2>")
+	fmt.Fprintln(w, "<ul>")
+	fmt.Fprintln(w, "<li>/wallet/UpdateWalletBalances</li>")
+	fmt.Fprintln(w, "<li>/wallet/Balances</li>")
+	fmt.Fprintln(w, "<li>/wallet/debit</li>")
+	fmt.Fprintln(w, "<li>/wallet/credit</li>")
 	fmt.Fprintln(w, "</ul>")
 
 }

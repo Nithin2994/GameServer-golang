@@ -84,3 +84,46 @@ type pollOpponentResponse struct {
 	Status         string `json:"status"`
 	OpponentPlayer string `json:"opponentPlayer"`
 }
+
+type playerWallet struct {
+	PlayerName string           `json:"playerName"`
+	Balances   map[string]int64 `json:"balances"`
+}
+
+type updatePlayerWalletRequest struct {
+	PlayerName string           `json:"playerName"`
+	Balances   map[string]int64 `json:"balances"`
+}
+
+type balancesRequest struct {
+	PlayerName string `json:"playerName"`
+}
+
+type creditRequest struct {
+	PlayerName string `json:"playerName"`
+	Amount     int64  `json:"amount"`
+	Currency   string `json:"currency"`
+}
+
+type debitRequest struct {
+	PlayerName string `json:"playerName"`
+	Amount     int64  `json:"amount"`
+	Currency   string `json:"currency"`
+}
+
+type updatePlayerWalletResponse struct {
+	Status string `json:"status"`
+}
+
+type balancesResponse struct {
+	Status   string           `json:"status"`
+	Balances map[string]int64 `json:"balances"`
+}
+
+type creditResponse struct {
+	Status string `json:"status"`
+}
+
+type debitResponse struct {
+	Status string `json:"status"`
+}
