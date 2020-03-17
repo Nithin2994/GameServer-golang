@@ -127,3 +127,28 @@ type creditResponse struct {
 type debitResponse struct {
 	Status string `json:"status"`
 }
+
+type playerInfo struct {
+	PlayerName  string `json:"playerName"`
+	PlayerLevel int    `json:"playerLevel"`
+}
+
+type updatePlayerLevelRequest struct {
+	PlayerName  string `json:"playerName"`
+	PlayerLevel int    `json:"playerLevel"`
+}
+
+type updatePlayerLevelResponse struct {
+	Status string `json:"status"`
+}
+
+type getPlayerStateRequest struct {
+	PlayerName string `json:"playerName"`
+}
+
+type getPlayerStateResponse struct {
+	Status       string           `json:"status"`
+	PlayerName   string           `json:"playerName"`
+	PlayerLevel  int              `json:"playerLevel"`
+	PlayerWallet map[string]int64 `json:"playerBalances"`
+}
