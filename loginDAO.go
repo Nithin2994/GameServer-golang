@@ -10,6 +10,7 @@ import (
 func savePlayer(p string, pass string, email string, mobileNo int64) int {
 	conn, err := getRedisConnection()
 	if err != nil {
+		fmt.Println(err)
 		log.Fatal(err)
 	}
 	defer conn.Close()

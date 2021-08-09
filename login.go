@@ -13,7 +13,7 @@ func register(w http.ResponseWriter, r *http.Request) {
 	var res response
 	var req registrationRequest
 	_ = json.NewDecoder(r.Body).Decode(&req)
-
+	fmt.Println("register called")
 	status := savePlayer(req.PlayerName, req.Password, req.Email, req.MobileNo)
 	if status == 0 {
 		res.Status = success

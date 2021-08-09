@@ -7,6 +7,7 @@ import (
 
 	"github.com/Nithin2994/gomodules/redis"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 var contentType string = "application/json"
@@ -29,26 +30,30 @@ func main() {
 }
 
 func service() {
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},           // All origins
+		AllowedMethods: []string{"GET", "POST"}, // Allowing only get, just an example
+	})
 
 	router := mux.NewRouter()
 	router.HandleFunc("/index", index)
-	router.HandleFunc("/login", login).Methods("POST")
-	router.HandleFunc("/register", register).Methods("POST")
-	router.HandleFunc("/leaderboard/getActiveLeaderboard", getActiveLeaderboard).Methods("GET")
-	router.HandleFunc("/leaderboard/{leaderboardId}/addScore", addScore).Methods("POST")
-	router.HandleFunc("/leaderboard/create", create).Methods("POST")
-	router.HandleFunc("/leaderboard/delete", delete).Methods("POST")
-	router.HandleFunc("/leaderboard/{leaderboardId}", getLeaderboard).Methods("GET")
-	router.HandleFunc("/leaderboard/{leaderboardId}/{playerId}", playerDetails).Methods("GET")
-	router.HandleFunc("/matchmaking/findOpponent", findOpponenet).Methods("POST")
-	router.HandleFunc("/matchmaking/pollOpponent", pollOpponent).Methods("POST")
-	router.HandleFunc("/wallet/updateWalletBalances", updatePlayerWallet).Methods("POST")
-	router.HandleFunc("/wallet/balances", getPlayerWallet).Methods("POST")
-	router.HandleFunc("/wallet/debit", debit).Methods("POST")
-	router.HandleFunc("/wallet/credit", credit).Methods("POST")
-	router.HandleFunc("/player/updatePlayerLevel", updatePlayerLevel).Methods("POST")
-	router.HandleFunc("/player/getPlayerState", getPlayerState).Methods("POST")
-	log.Fatal(http.ListenAndServe(":8081", router))
+	router.HandleFunc("/login", login).Methods("POST", "OPTIONS")
+	router.HandleFunc("/register", register).Methods("POST", "OPTIONS")
+	router.HandleFunc("/leaderboard/getActiveLeaderboard", getActiveLeaderboard).Methods("GET", "OPTIONS")
+	router.HandleFunc("/leaderboard/{leaderboardId}/addScore", addScore).Methods("POST", "OPTIONS")
+	router.HandleFunc("/leaderboard/create", create).Methods("POST", "OPTIONS")
+	router.HandleFunc("/leaderboard/delete", delete).Methods("POST", "OPTIONS")
+	router.HandleFunc("/leaderboard/{leaderboardId}", getLeaderboard).Methods("GET", "OPTIONS")
+	router.HandleFunc("/leaderboard/{leaderboardId}/{playerId}", playerDetails).Methods("GET", "OPTIONS")
+	router.HandleFunc("/matchmaking/findOpponent", findOpponenet).Methods("POST", "OPTIONS")
+	router.HandleFunc("/matchmaking/pollOpponent", pollOpponent).Methods("POST", "OPTIONS")
+	router.HandleFunc("/wallet/updateWalletBalances", updatePlayerWallet).Methods("POST", "OPTIONS")
+	router.HandleFunc("/wallet/balances", getPlayerWallet).Methods("POST", "OPTIONS")
+	router.HandleFunc("/wallet/debit", debit).Methods("POST", "OPTIONS")
+	router.HandleFunc("/wallet/credit", credit).Methods("POST", "OPTIONS")
+	router.HandleFunc("/player/updatePlayerLevel", updatePlayerLevel).Methods("POST", "OPTIONS")
+	router.HandleFunc("/player/getPlayerState", getPlayerState).Methods("POST", "OPTIONS")
+	log.Fatal(http.ListenAndServe(":8081", c.Handler(router)))
 
 }
 
