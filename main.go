@@ -36,6 +36,7 @@ func service() {
 	})
 
 	router := mux.NewRouter()
+
 	router.HandleFunc("/index", index)
 	router.HandleFunc("/login", login).Methods("POST", "OPTIONS")
 	router.HandleFunc("/register", register).Methods("POST", "OPTIONS")
@@ -58,7 +59,7 @@ func service() {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "<h1>Welcome to Game Server</h1>")
+	fmt.Fprintln(w, "<h1>Welcome to Game Server v1.2</h1>")
 	fmt.Fprintln(w, "")
 	fmt.Fprintln(w, "")
 
