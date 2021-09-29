@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: game-server
-        image: "nithin524/gameserver-golang:v1.0.3"
+        image: "nithin524/gameserver-golang:v1.0.3" # {"$imagepolicy": "flux-system:game-server"}
         imagePullPolicy: Always
         ports:
           - containerPort: 8081
