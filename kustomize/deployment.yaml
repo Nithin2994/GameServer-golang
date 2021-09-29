@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: game-server
-        image: "nithin524/gameserver-golang:1.0.3"
+        image: "nithin524/gameserver-golang:v1.0.3"
         imagePullPolicy: Always
         ports:
           - containerPort: 8081
